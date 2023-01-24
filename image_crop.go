@@ -13,8 +13,6 @@ import (
 )
 
 func cropper(w http.ResponseWriter, r *http.Request) {
-	outBytes := new(bytes.Buffer)
-
 	response, err := http.Get("https://" + r.URL.Query().Get("img"))
 	if err != nil {
 		http.Error(w, "Could not read image", http.StatusBadRequest)
@@ -43,6 +41,7 @@ func cropper(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Cannot crop image", http.StatusInternalServerError)
 	}
 
+	outBytes := new(bytes.Buffer)
 	err = jpeg.Encode(outBytes, croppedImg, &jpeg.Options{
 		Quality: 100,
 	})
