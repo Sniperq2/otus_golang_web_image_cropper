@@ -8,11 +8,15 @@ import (
 	"net/http"
 	"strconv"
 
+	client "image_croper/utils"
+
 	"github.com/oliamb/cutter"
 )
 
 func Cropper(w http.ResponseWriter, r *http.Request) {
-	response, err := http.Get("https://" + r.URL.Query().Get("img"))
+	customClient := client.NewClient()
+
+	response, err := customClient.Get("https://"+r.URL.Query().Get("img"), r.Header)
 	if err != nil {
 		http.Error(w, "Could not read image", http.StatusBadRequest)
 	}
