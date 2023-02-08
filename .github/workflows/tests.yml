@@ -1,0 +1,9 @@
+name: WebImage cropper tests
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GO111MODULE: "on"
