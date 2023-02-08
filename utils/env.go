@@ -5,6 +5,11 @@ import (
 	"os"
 )
 
+type InitConfig struct {
+	CacheSize int
+	CachePath string
+}
+
 func SetConfig() string {
 	cacheLength, ok := os.LookupEnv("WEB_IMAGE_CROPPER_CACHE")
 	if !ok || len(cacheLength) == 0 {
