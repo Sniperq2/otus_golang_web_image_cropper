@@ -13,6 +13,7 @@ import (
 	"image_croper/utils"
 
 	"github.com/google/uuid"
+	"github.com/gorilla/mux"
 	"github.com/oliamb/cutter"
 )
 
@@ -20,9 +21,9 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 	return func(w http.ResponseWriter, r *http.Request) {
 		customClient := utils.NewClient()
 
-		makeUrl := utils.AppendHttp(r.URL.Query().Get("img"))
-
-		response, err := customClient.Get(makeUrl, r.Header)
+		makeUrl := utils.AppendHttp(mux.Vars(r)["rest"])
+		width, height, url := utils.ParseUrl(makeUrl)
+		response, err := customClient.Get(url, r.Header)
 		if err != nil {
 			http.Error(w, "Could not read image", http.StatusBadRequest)
 		}
@@ -42,8 +43,8 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		}
 
 		croppedImg, err := cutter.Crop(img, cutter.Config{
-			Width:  250,
-			Height: 300,
+			Width:  width,
+			Height: height,
 		})
 
 		if err != nil {

@@ -28,7 +28,7 @@ func main() {
 		CacheSize: cacheSize,
 		CachePath: fmt.Sprintf("%s/cache/", cacheDirectory),
 	}
-	r.HandleFunc("/fill", controller.Cropper(initConfig)).Methods(http.MethodGet)
+	r.HandleFunc("/fill/{rest:.*}", controller.Cropper(initConfig)).Methods(http.MethodGet)
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		return
 	}
