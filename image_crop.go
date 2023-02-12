@@ -9,19 +9,22 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
 	r := mux.NewRouter()
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 
 	cacheDirectory, err := os.Getwd()
 	if err != nil {
-		return
+		log.Print("could not get program executable path")
 	}
 
 	cacheSize, err := strconv.Atoi(utils.SetConfig())
 	if err != nil {
-		return
+		log.Print("Could not set proper config")
 	}
 
 	initConfig := &utils.InitConfig{
@@ -30,6 +33,6 @@ func main() {
 	}
 	r.HandleFunc("/fill/{rest:.*}", controller.Cropper(initConfig)).Methods(http.MethodGet)
 	if err := http.ListenAndServe(":3000", r); err != nil {
-		return
+		log.Print("Could not start server application")
 	}
 }
