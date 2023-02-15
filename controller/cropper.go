@@ -57,8 +57,7 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		})
 
 		// create uuid for file naming
-		id := uuid.New()
-		newUUID := id.String()
+		newUUID := uuid.NewString()
 
 		out, _ := os.Create(fmt.Sprintf("%s%s.jpg", config.CachePath, newUUID))
 		defer func() {
