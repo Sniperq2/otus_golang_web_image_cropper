@@ -3,3 +3,6 @@ build:
 
 run:
 	go run image_crop.go
+
+test:
+	go test ./...
