@@ -3,7 +3,6 @@ package controller
 import (
 	"bytes"
 	"fmt"
-	"image"
 	"image/jpeg"
 	"log"
 	"net/http"
@@ -26,6 +25,12 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		response, err := customClient.Get(fmt.Sprintf("http://%s", url), r.Header)
 		if err != nil {
 			return
+		}
+
+		eTag := response.Header.Get("ETag")
+		image, ok := config.CacheHandle.Get(utils.Key(eTag))
+		if ok {
+
 		}
 
 		defer func() {
