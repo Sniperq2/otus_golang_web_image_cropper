@@ -6,8 +6,8 @@ import (
 )
 
 type InitConfig struct {
-	CacheSize int
-	CachePath string
+	CacheHandle Cache
+	CachePath   string
 }
 
 func SetConfig() string {

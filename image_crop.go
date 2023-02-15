@@ -26,14 +26,12 @@ func main() {
 	if err != nil {
 		log.Print("Could not set proper config")
 	}
+	cacheHandle := utils.NewCache(cacheSize)
 
 	initConfig := &utils.InitConfig{
-		CacheSize: cacheSize,
-		CachePath: fmt.Sprintf("%s/cache/", cacheDirectory),
+		CacheHandle: cacheHandle,
+		CachePath:   fmt.Sprintf("%s/cache/", cacheDirectory),
 	}
-
-	imageCache := utils.NewCache(initConfig.CacheSize)
-	imageCache.Clear() //FIXME: clear cache for now
 
 	r.HandleFunc("/fill/{rest:.*}", controller.Cropper(initConfig)).Methods(http.MethodGet)
 	if err := http.ListenAndServe(":3000", r); err != nil {
