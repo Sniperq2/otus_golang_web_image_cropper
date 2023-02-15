@@ -21,11 +21,11 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 	return func(w http.ResponseWriter, r *http.Request) {
 		customClient := utils.NewClient()
 
-		makeUrl := utils.AppendHttp(mux.Vars(r)["rest"])
+		makeUrl := fmt.Sprintf("http://%s", mux.Vars(r)["rest"])
 		width, height, url := utils.ParseUrl(makeUrl)
 		response, err := customClient.Get(url, r.Header)
 		if err != nil {
-			http.Error(w, "Could not read image", http.StatusBadRequest)
+			return
 		}
 
 		defer func() {
@@ -55,7 +55,9 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		err = jpeg.Encode(outBytes, croppedImg, &jpeg.Options{
 			Quality: 100,
 		})
-
+		if err != nil {
+			http.Error(w, "Cannot crop image", http.StatusInternalServerError)
+		}
 		// create uuid for file naming
 		newUUID := uuid.NewString()
 
