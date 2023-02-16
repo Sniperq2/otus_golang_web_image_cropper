@@ -3,7 +3,9 @@ package controller
 import (
 	"bytes"
 	"fmt"
+	"image"
 	"image/jpeg"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -28,9 +30,20 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		}
 
 		eTag := response.Header.Get("ETag")
-		image, ok := config.CacheHandle.Get(utils.Key(eTag))
+		imageTag, ok := config.CacheHandle.Get(utils.Key(eTag))
 		if ok {
+			cachedFile, err := ioutil.ReadFile(fmt.Sprintf("%s%s.jpg", config.CachePath, imageTag))
+			if err != nil {
+				return //FIXME: if files was cleared from disk
+			}
+			log.Println("Got image from cache.")
 
+			w.Header().Add("Content-Type", "image/jpeg")
+			w.Header().Add("Content-Length", strconv.Itoa(len(cachedFile)))
+			if _, err := w.Write(cachedFile); err != nil {
+				log.Println("unable to write image.")
+			}
+			return
 		}
 
 		defer func() {
@@ -65,6 +78,9 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		}
 		// create uuid for file naming
 		newUUID := uuid.NewString()
+		if ok := config.CacheHandle.Set(utils.Key(eTag), newUUID); ok {
+			return
+		}
 
 		out, _ := os.Create(fmt.Sprintf("%s%s.jpg", config.CachePath, newUUID))
 		defer func() {
