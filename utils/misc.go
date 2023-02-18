@@ -8,6 +8,10 @@ import (
 func ParseUrl(rawUrl string) (width int, height int, url string) {
 	splittedUrl := strings.SplitN(rawUrl, "/", 3)
 
+	if len(splittedUrl) != 3 {
+		return -1, -1, ""
+	}
+
 	width, err := strconv.Atoi(splittedUrl[0])
 	if err != nil {
 		return -1, -1, ""
