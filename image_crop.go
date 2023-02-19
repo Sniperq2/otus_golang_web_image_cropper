@@ -21,7 +21,8 @@ func main() {
 
 	cacheDirectory, err := os.Getwd()
 	if err != nil {
-		log.Print("could not get program executable path")
+		eve := log.Fatal()
+		eve.Msg("could not get program executable path")
 	}
 
 	cacheSize, err := strconv.Atoi(utils.SetConfig())
