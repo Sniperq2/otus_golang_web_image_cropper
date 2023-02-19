@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - work_in_progress
 
 env:
   GO111MODULE: "on"
