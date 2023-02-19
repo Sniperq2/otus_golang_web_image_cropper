@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"image"
 	"image/jpeg"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -32,7 +31,7 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		eTag := response.Header.Get("ETag")
 		imageTag, ok := config.CacheHandle.Get(utils.Key(eTag))
 		if ok {
-			cachedFile, err := ioutil.ReadFile(fmt.Sprintf("%s%s.jpg", config.CachePath, imageTag))
+			cachedFile, err := os.ReadFile(fmt.Sprintf("%s%s.jpg", config.CachePath, imageTag))
 			if err != nil {
 				return // FIXME: if files was cleared from disk
 			}
