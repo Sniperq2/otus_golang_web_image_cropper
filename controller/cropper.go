@@ -3,7 +3,6 @@ package controller
 import (
 	"bytes"
 	"fmt"
-	"image"
 	"image/jpeg"
 	"log"
 	"net/http"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/oliamb/cutter"
 )
 
 func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Request) {
@@ -54,17 +52,10 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		if response.StatusCode != 200 {
 			http.Error(w, "Could not load image", http.StatusTeapot)
 		}
-		img, _, err := image.Decode(response.Body)
-		if err != nil {
-			http.Error(w, "Cannot decode image", http.StatusInternalServerError)
-		}
 
-		croppedImg, err := cutter.Crop(img, cutter.Config{
-			Width:  width,
-			Height: height,
-		})
+		croppedImg, err := utils.CropImage(response.Body, width, height)
 		if err != nil {
-			http.Error(w, "Cannot crop image", http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 
 		outBytes := new(bytes.Buffer)
