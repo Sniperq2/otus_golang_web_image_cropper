@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"image_croper/controller"
-	"image_croper/utils"
 	"net/http"
 	"os"
 	"strconv"
+
+	"image_croper/controller"
+	"image_croper/utils"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"

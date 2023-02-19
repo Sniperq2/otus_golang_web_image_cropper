@@ -9,8 +9,7 @@ type HttpClient interface {
 	Get(url string, headers http.Header) (*http.Response, error)
 }
 
-type httpClient struct {
-}
+type httpClient struct{}
 
 func NewClient() HttpClient {
 	return &httpClient{}

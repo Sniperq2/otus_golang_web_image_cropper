@@ -34,7 +34,7 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 		if ok {
 			cachedFile, err := ioutil.ReadFile(fmt.Sprintf("%s%s.jpg", config.CachePath, imageTag))
 			if err != nil {
-				return //FIXME: if files was cleared from disk
+				return // FIXME: if files was cleared from disk
 			}
 			log.Println("Got image from cache.")
 
@@ -64,7 +64,6 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 			Width:  width,
 			Height: height,
 		})
-
 		if err != nil {
 			http.Error(w, "Cannot crop image", http.StatusInternalServerError)
 		}
