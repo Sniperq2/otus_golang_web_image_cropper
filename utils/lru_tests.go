@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCache(t *testing.T) {
+func TestLRUCache(t *testing.T) {
 	t.Run("test 1", func(t *testing.T) {
 		c := NewCache(2)
 
