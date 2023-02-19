@@ -5,22 +5,22 @@ import (
 	"strings"
 )
 
-func ParseUrl(rawUrl string) (width int, height int, url string) {
-	splittedUrl := strings.SplitN(rawUrl, "/", 3)
+func ParseURL(rawUrl string) (width int, height int, url string) {
+	splittedURL := strings.SplitN(rawUrl, "/", 3)
 
-	if len(splittedUrl) != 3 {
+	if len(splittedURL) != 3 {
 		return -1, -1, ""
 	}
 
-	width, err := strconv.Atoi(splittedUrl[0])
+	width, err := strconv.Atoi(splittedURL[0])
 	if err != nil {
 		return -1, -1, ""
 	}
-	height, err = strconv.Atoi(splittedUrl[1])
+	height, err = strconv.Atoi(splittedURL[1])
 	if err != nil {
 		return -1, -1, ""
 	}
-	url = splittedUrl[2]
+	url = splittedURL[2]
 
 	return
 }

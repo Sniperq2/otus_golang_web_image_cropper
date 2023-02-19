@@ -22,7 +22,7 @@ func Cropper(config *utils.InitConfig) func(w http.ResponseWriter, r *http.Reque
 	return func(w http.ResponseWriter, r *http.Request) {
 		customClient := utils.NewClient()
 
-		width, height, url := utils.ParseUrl(mux.Vars(r)["rest"])
+		width, height, url := utils.ParseURL(mux.Vars(r)["rest"])
 
 		response, err := customClient.Get(fmt.Sprintf("http://%s", url), r.Header)
 		if err != nil {

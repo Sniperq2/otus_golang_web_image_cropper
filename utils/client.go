@@ -5,13 +5,13 @@ import (
 	"net/http"
 )
 
-type HttpClient interface {
+type HTTPClient interface {
 	Get(url string, headers http.Header) (*http.Response, error)
 }
 
 type httpClient struct{}
 
-func NewClient() HttpClient {
+func NewClient() HTTPClient {
 	return &httpClient{}
 }
 
