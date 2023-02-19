@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"image_croper/controller"
 	"image_croper/utils"
@@ -35,7 +36,14 @@ func main() {
 	}
 
 	r.HandleFunc("/fill/{rest:.*}", controller.Cropper(initConfig)).Methods(http.MethodGet)
-	if err := http.ListenAndServe(":3000", r); err != nil {
+
+	server := &http.Server{
+		Addr:              ":3000",
+		ReadHeaderTimeout: 3 * time.Second,
+		Handler:           r,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
 		log.Print("Could not start server application")
 	}
 }
