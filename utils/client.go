@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"context"
 	"errors"
 	"net/http"
 )
@@ -16,12 +17,13 @@ func NewClient() HTTPClient {
 }
 
 func (cl *httpClient) Get(url string, headers http.Header) (*http.Response, error) {
-	return cl.do(http.MethodGet, url, headers, nil)
+	return cl.do(http.MethodGet, url, headers)
 }
 
-func (cl *httpClient) do(method string, url string, headers http.Header, body interface{}) (*http.Response, error) {
+func (cl *httpClient) do(method string, url string, headers http.Header) (*http.Response, error) {
 	client := http.Client{}
-	request, err := http.NewRequest(method, url, nil)
+	ctx := context.Background()
+	request, err := http.NewRequestWithContext(ctx, method, url, nil)
 	if err != nil {
 		return nil, errors.New("could not create request")
 	}
