@@ -1,17 +1,16 @@
 name: Release cropper binaries
 
 on:
-  release:
+  push:
     types: [created]
+    branches:
+      - master
+      - work_in_progress
 
 jobs:
-  releases-matrix:
+  releases-image-crop:
     name: Release Go Binary
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [linux]
-        goarch: [amd64]
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
@@ -19,9 +18,9 @@ jobs:
       - uses: wangyoucao577/go-release-action@v1.19
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: ${{ matrix.goos }}
-          goarch: ${{ matrix.goarch }}
+          goos: linux
+          goarch: amd64
           project_path: "./"
           binary_name: "image_crop"
           ldflags: "-s -w"
-          extra_files: Readme.md
+          extra_files: README.md
