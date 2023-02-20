@@ -21,13 +21,12 @@ func main() {
 
 	cacheDirectory, err := os.Getwd()
 	if err != nil {
-		eve := log.Fatal()
-		eve.Msg("could not get program executable path")
+		log.Fatal().Msg("could not get program executable path")
 	}
 
 	cacheSize, err := strconv.Atoi(utils.SetConfig())
 	if err != nil {
-		log.Print("Could not set proper config")
+		log.Fatal().Msg("Could not set proper config")
 	}
 	cacheHandle := utils.NewCache(cacheSize)
 
