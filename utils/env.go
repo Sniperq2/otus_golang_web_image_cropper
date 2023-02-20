@@ -16,8 +16,7 @@ func SetConfig() string {
 	cacheLength, ok := os.LookupEnv(webImageCropperCache)
 	if !ok || len(cacheLength) == 0 {
 		// sets default value to 10
-		err := os.Setenv(webImageCropperCache, "10")
-		if err != nil {
+		if err := os.Setenv(webImageCropperCache, "10"); err != nil {
 			log.Println("No image cropper cache set. Set default to 10")
 		}
 		return "10"
