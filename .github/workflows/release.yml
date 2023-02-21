@@ -9,13 +9,5 @@ jobs:
     name: Release Go Binary
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: wangyoucao577/go-release-action@v1.16
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: linux
-          goarch: amd64
-          goversion: "https://dl.google.com/go/go1.16.1.linux-amd64.tar.gz"
-          binary_name: "image_crop"
-          ldflags: "-s -w"
-          extra_files: README.md
+      - name: Build project
+        run: make build
