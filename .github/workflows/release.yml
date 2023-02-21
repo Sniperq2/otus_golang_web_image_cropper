@@ -9,5 +9,10 @@ jobs:
     name: Release Go Binary
     runs-on: ubuntu-latest
     steps:
-      - name: Build project
-        run: make build
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Build
+        run: go build -v ./...
