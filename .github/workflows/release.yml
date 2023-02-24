@@ -19,6 +19,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          goversion: 1.16
+          goversion: "https://dl.google.com/go/go1.16.10.linux-amd64.tar.gz"
           binary_name: "image_crop"
           extra_files: README.md
