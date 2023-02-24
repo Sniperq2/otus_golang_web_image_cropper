@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  image_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      volumes:
+        -"/tmp/image_cropper_cache:/tmp/image_cropper_cache"
+      ports:
+        - "3000:3000"

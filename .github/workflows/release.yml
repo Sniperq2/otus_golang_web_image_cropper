@@ -1,0 +1,19 @@
+name: Release cropper binaries
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  releases-image-crop:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Build
+        run: go build -v ./...
