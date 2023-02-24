@@ -7,7 +7,7 @@ on:
 jobs:
   releases-image-crop:
     name: Release Go Binary
-    runs-on: ubuntu-21.10
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         goos: [ linux ]
