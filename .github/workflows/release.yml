@@ -9,6 +9,7 @@ jobs:
     name: Release Go Binary
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
